@@ -72,7 +72,7 @@ BBR_installation_status(){
 	if [[ ! -e ${BBR_file} ]]; then
 		echo -e "${Error} 没有发现 BBR脚本，开始下载..."
 		cd "${file}"
-		if ! wget -O bbr.sh https://pan.salty.ml/api/public/dl/0ZkNPP-b then
+		if ! wget -O bbr.sh https://pan.salty.ml/api/public/dl/0ZkNPP-b; then
 			echo -e "${Error} BBR 脚本下载失败 !" && exit 1
 		else
 			echo -e "${Info} BBR 脚本下载完成 !"
@@ -1754,8 +1754,7 @@ elif [[ "${action}" == "monitor" ]]; then
 	crontab_monitor_ssr
 else
 	echo -e "  ShadowsocksR MuJSON一键管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
-  ---- lemon | 2019/10/16 ---- Centos 6 不支持防火墙设置，需手动放行端口
-
+  ---- lemonsn | 2019/10/16 修复了BUG ----
   ${Green_font_prefix}1.${Font_color_suffix} 安装 ShadowsocksR
   ${Green_font_prefix}2.${Font_color_suffix} 更新 ShadowsocksR
   ${Green_font_prefix}3.${Font_color_suffix} 卸载 ShadowsocksR
