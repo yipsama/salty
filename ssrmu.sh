@@ -5,12 +5,12 @@ export PATH
 #=================================================
 #	System Required: CentOS 6+/Debian 6+/Ubuntu 14.04+
 #	Description: Install the ShadowsocksR mudbjson server
-#	Version: 1.0.4
-#	Author: salty
-#	Date: 2019/7/1
+#	Version: 1.0.5
+#	Author: lemon
+#	Date: 2019/10/16
 #=================================================
 
-sh_ver="1.0.4"
+sh_ver="1.0.5"
 filepath=$(cd "$(dirname "$0")"; pwd)
 file=$(echo -e "${filepath}"|awk -F "$0" '{print $1}')
 ssr_folder="/usr/local/shadowsocksr"
@@ -72,7 +72,7 @@ BBR_installation_status(){
 	if [[ ! -e ${BBR_file} ]]; then
 		echo -e "${Error} 没有发现 BBR脚本，开始下载..."
 		cd "${file}"
-		if ! wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/bbr.sh; then
+		if ! wget -O bbr.sh https://pan.salty.ml/api/public/dl/0ZkNPP-b then
 			echo -e "${Error} BBR 脚本下载失败 !" && exit 1
 		else
 			echo -e "${Info} BBR 脚本下载完成 !"
@@ -812,22 +812,22 @@ Centos_yum(){
 	yum update
 	cat /etc/redhat-release |grep 7\..*|grep -i centos>/dev/null
 	if [[ $? = 0 ]]; then
-		yum install -y vim unzip net-tools
+		yum install -y vim unzip net-tools nano
 	fi
 }
 Debian_apt(){
 	apt-get update
 	cat /etc/issue |grep 9\..*>/dev/null
 	if [[ $? = 0 ]]; then
-		apt-get install -y vim unzip cron net-tools
+		apt-get install -y vim unzip cron net-tools nano
 	else
-		apt-get install -y vim unzip cron
+		apt-get install -y vim unzip cron nano
 	fi
 }
 # 下载 ShadowsocksR
 Download_SSR(){
 	cd "/usr/local"
-	wget -O manyuser.zip http://pan.salty.ml:8080/api/public/dl/9wNBUIpf
+	wget -O manyuser.zip https://pan.salty.ml/api/public/dl/PR5ubAqW
 	#git config --global http.sslVerify false
 	#env GIT_SSL_NO_VERIFY=true git clone -b manyuser https://github.com/ToyoDAdoubiBackup/shadowsocksr.git
 	#[[ ! -e ${ssr_folder} ]] && echo -e "${Error} ShadowsocksR服务端 下载失败 !" && exit 1
@@ -851,7 +851,7 @@ Download_SSR(){
 }
 Service_SSR(){
 	if [[ ${release} = "centos" ]]; then
-		if ! wget -O /etc/init.d/ssrmu http://pan.salty.ml:8080/api/public/dl/gjBSzRGD; then
+		if ! wget -O /etc/init.d/ssrmu https://pan.salty.ml/api/public/dl/3bRyWSeN; then
 			echo -e "${Error} ShadowsocksR服务 管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/ssrmu
@@ -872,10 +872,10 @@ JQ_install(){
 		cd "${ssr_folder}"
 		if [[ ${bit} = "x86_64" ]]; then
 			mv "jq-linux64" "jq"
-			#wget -O ${jq_file} http://pan.salty.ml:8080/api/public/dl/3Dpp_Mu5
+			#wget -O ${jq_file} https://pan.salty.ml/api/public/dl/X5dLKDrk
 		else
 			mv "jq-linux32" "jq"
-			#wget -O ${jq_file} http://pan.salty.ml:8080/api/public/dl/2utNMSb-
+			#wget -O ${jq_file} https://pan.salty.ml/api/public/dl/zImhaTEl
 		fi
 		[[ ! -e ${jq_file} ]] && echo -e "${Error} JQ解析器 重命名失败，请检查 !" && exit 1
 		chmod +x ${jq_file}
@@ -955,7 +955,6 @@ Uninstall_SSR(){
 		echo && echo " 卸载已取消..." && echo
 	fi
 }
-
 Install_Libsodium(){
 	if [[ -e ${Libsodiumr_file} ]]; then
 		echo -e "${Error} libsodium 已安装 , 是否覆盖安装(更新)？[y/N]"
@@ -967,7 +966,7 @@ Install_Libsodium(){
 	else
 		echo -e "${Info} libsodium 未安装，开始安装..."
 	fi
-
+	Check_Libsodium_ver
 	if [[ ${release} == "centos" ]]; then
 		yum update
 		echo -e "${Info} 安装依赖..."
@@ -1262,7 +1261,7 @@ Del_port_user(){
 }
 Manually_Modify_Config(){
 	SSR_installation_status
-	vi ${config_user_mudb_file}
+	nano ${config_user_mudb_file}
 	echo "是否现在重启ShadowsocksR？[Y/n]" && echo
 	read -e -p "(默认: y):" yn
 	[[ -z ${yn} ]] && yn="y"
@@ -1543,9 +1542,9 @@ Configure_BBR(){
  ${Green_font_prefix}3.${Font_color_suffix} 停止 BBR
  ${Green_font_prefix}4.${Font_color_suffix} 查看 BBR 状态" && echo
 echo -e "${Green_font_prefix} [安装前 请注意] ${Font_color_suffix}
-1. 安装开启BBR，需要更换内核，存在更换失败等风险(重启后无法开机)
-2. 本脚本仅支持 Debian / Ubuntu 系统更换内核，OpenVZ和Docker 不支持更换内核
-3. Debian 更换内核过程中会提示 [ 是否终止卸载内核 ] ，请选择 ${Green_font_prefix} NO ${Font_color_suffix}" && echo
+1. 安装开启BBR，需要更换内核，可能存在更换失败等风险(重启后无法开机)
+2. 本脚本仅支持 CentOS 6+，Debian 7+，Ubuntu 12+ 系统更换内核，OpenVZ和Docker 不支持更换内核
+3. GCP更换内核后，有时会遇到重启后整个磁盘变为只读的情况。执行以下命令即可恢复:mount -o remount rw /" && echo
 	read -e -p "(默认: 取消):" bbr_num
 	[[ -z "${bbr_num}" ]] && echo "已取消..." && exit 1
 	if [[ ${bbr_num} == "1" ]]; then
@@ -1755,7 +1754,7 @@ elif [[ "${action}" == "monitor" ]]; then
 	crontab_monitor_ssr
 else
 	echo -e "  ShadowsocksR MuJSON一键管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
-  ---- salty | 2019/7/1 ---- Centos 6 不支持防火墙设置，需手动放行端口
+  ---- lemon | 2019/10/16 ---- Centos 6 不支持防火墙设置，需手动放行端口
 
   ${Green_font_prefix}1.${Font_color_suffix} 安装 ShadowsocksR
   ${Green_font_prefix}2.${Font_color_suffix} 更新 ShadowsocksR
