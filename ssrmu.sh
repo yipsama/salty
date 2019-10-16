@@ -5,12 +5,12 @@ export PATH
 #=================================================
 #	System Required: CentOS 6+/Debian 6+/Ubuntu 14.04+
 #	Description: Install the ShadowsocksR mudbjson server
-#	Version: 1.0.6.2
+#	Version: 1.0.6.3
 #	Author: lemon
 #	Date: 2019/10/16
 #=================================================
 
-sh_ver="1.0.6.2"
+sh_ver="1.0.6.3"
 filepath=$(cd "$(dirname "$0")"; pwd)
 file=$(echo -e "${filepath}"|awk -F "$0" '{print $1}')
 ssr_folder="/usr/local/shadowsocksr"
@@ -1540,9 +1540,7 @@ Configure_BBR(){
 	
  ${Green_font_prefix}1.${Font_color_suffix} 安装 BBR
 ————————
- ${Green_font_prefix}2.${Font_color_suffix} 启动 BBR
- ${Green_font_prefix}3.${Font_color_suffix} 停止 BBR
- ${Green_font_prefix}4.${Font_color_suffix} 查看 BBR 状态" && echo
+ ${Green_font_prefix}2.${Font_color_suffix} 查看 BBR 状态" && echo
 echo -e "${Green_font_prefix} [安装前 请注意] ${Font_color_suffix}
 1. 安装开启BBR，需要更换内核，可能存在更换失败等风险(重启后无法开机)
 2. 本脚本仅支持 CentOS 6+，Debian 7+，Ubuntu 12+ 系统更换内核，OpenVZ和Docker 不支持更换内核
