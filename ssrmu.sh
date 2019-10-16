@@ -5,12 +5,12 @@ export PATH
 #=================================================
 #	System Required: CentOS 6+/Debian 6+/Ubuntu 14.04+
 #	Description: Install the ShadowsocksR mudbjson server
-#	Version: 1.0.5.2
+#	Version: 1.0.6
 #	Author: lemon
 #	Date: 2019/10/16
 #=================================================
 
-sh_ver="1.0.5.2"
+sh_ver="1.0.6"
 filepath=$(cd "$(dirname "$0")"; pwd)
 file=$(echo -e "${filepath}"|awk -F "$0" '{print $1}')
 ssr_folder="/usr/local/shadowsocksr"
@@ -899,6 +899,8 @@ Install_SSR(){
 	echo -e "${Info} 开始设置 ShadowsocksR账号配置..."
 	Set_user_api_server_pub_addr
 	Set_config_all
+	echo -e "${Info} 开始下载/安装 网络和密码学库(libsodium)..."
+	Install_Libsodium
 	echo -e "${Info} 开始安装/配置 ShadowsocksR依赖..."
 	Installation_dependency
 	echo -e "${Info} 开始下载/安装 ShadowsocksR文件..."
