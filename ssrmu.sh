@@ -5,12 +5,12 @@ export PATH
 #=================================================
 #	System Required: CentOS 6+/Debian 6+/Ubuntu 14.04+
 #	Description: Install the ShadowsocksR mudbjson server
-#	Version: 1.0.5.1
+#	Version: 1.0.5.2
 #	Author: lemon
 #	Date: 2019/10/16
 #=================================================
 
-sh_ver="1.0.5.1"
+sh_ver="1.0.5.2"
 filepath=$(cd "$(dirname "$0")"; pwd)
 file=$(echo -e "${filepath}"|awk -F "$0" '{print $1}')
 ssr_folder="/usr/local/shadowsocksr"
@@ -1224,7 +1224,7 @@ Add_port_user(){
 				echo -e "${Info} 用户添加成功 ${Green_font_prefix}[用户名: ${ssr_user} , 端口: ${ssr_port}]${Font_color_suffix} "
 				echo
 				read -e -p "是否继续 添加用户配置？[Y/n]:" addyn
-				[[ -z ${addyn} ]] && addyn="y"
+				[[ -z ${addyn} ]] && addyn="n"
 				if [[ ${addyn} == [Nn] ]]; then
 					Get_User_info "${ssr_port}"
 					View_User_info
