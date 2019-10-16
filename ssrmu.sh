@@ -5,12 +5,12 @@ export PATH
 #=================================================
 #	System Required: CentOS 6+/Debian 6+/Ubuntu 14.04+
 #	Description: Install the ShadowsocksR mudbjson server
-#	Version: 1.0.6.1
+#	Version: 1.0.6.2
 #	Author: lemon
 #	Date: 2019/10/16
 #=================================================
 
-sh_ver="1.0.6.1"
+sh_ver="1.0.6.2"
 filepath=$(cd "$(dirname "$0")"; pwd)
 file=$(echo -e "${filepath}"|awk -F "$0" '{print $1}')
 ssr_folder="/usr/local/shadowsocksr"
@@ -1552,27 +1552,14 @@ echo -e "${Green_font_prefix} [安装前 请注意] ${Font_color_suffix}
 	if [[ ${bbr_num} == "1" ]]; then
 		Install_BBR
 	elif [[ ${bbr_num} == "2" ]]; then
-		Start_BBR
-	elif [[ ${bbr_num} == "3" ]]; then
-		Stop_BBR
-	elif [[ ${bbr_num} == "4" ]]; then
 		Status_BBR
 	else
-		echo -e "${Error} 请输入正确的数字(1-4)" && exit 1
+		echo -e "${Error} 请输入正确的数字(1-2)" && exit 1
 	fi
 }
 Install_BBR(){
-	[[ ${release} = "centos" ]] && echo -e "${Error} 本脚本不支持 CentOS系统安装 BBR !" && exit 1
 	BBR_installation_status
 	bash "${BBR_file}"
-}
-Start_BBR(){
-	BBR_installation_status
-	bash "${BBR_file}" start
-}
-Stop_BBR(){
-	BBR_installation_status
-	bash "${BBR_file}" stop
 }
 Status_BBR(){
 	BBR_installation_status
